@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import ssii2.visa.PagoBean;
 import ssii2.visa.*;
 import javax.ejb.EJB;
+// import ssii2.visa.VisaDAOLocal; Este ya esta en el de ssii2.visa*
 
 /**
  *

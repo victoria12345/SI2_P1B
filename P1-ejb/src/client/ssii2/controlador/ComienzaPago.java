@@ -28,6 +28,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ssii2.visa.*;
+import javax.ejb.EJB;
+// import ssii2.visa.VisaDAOLocal; Este ya esta en el de ssii2.visa*
 
 /**
  *
@@ -59,6 +61,10 @@ public class ComienzaPago extends ServletRaiz {
      * Atribute que hace referencia la bean Pago
      */
     public final static String ATTR_PAGO = "pago";
+
+    // esto creo que aqui no hace falta porque no llama a dao en nignun momento pero bueno.
+    @EJB(name="VisaDAOBean", beanInterface=VisaDAOLocal.class)
+    private VisaDAOLocal dao;
 
     /**
     * Procesa una petici&oacute;n HTTP tanto <code>GET</code> como <code>POST</code>.

@@ -44,7 +44,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import ssii2.visa.*;
-import ssii2.visa.dao.VisaDAO;
 
 import javax.ejb.EJB;
 import ssii2.visa.VisaDAORemote;

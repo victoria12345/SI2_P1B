@@ -20,7 +20,7 @@ import ssii2.visa.PagoBean;
 import java.util.List;
 import ssii2.visa.*;
 import javax.ejb.EJB;
-// import ssii2.visa.VisaDAOLocal;
+// import ssii2.visa.VisaDAOLocal; Este ya esta en el de ssii2.visa*
 
 /**
  *
