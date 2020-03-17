@@ -48,6 +48,22 @@ public class TarjetaBean {
     }
 
     /**
+     * Devuelve el saldo de la tarjeta
+     * @return el saldo de la tarjeta
+     */
+    public String getSaldo() {
+        return saldo;
+    }
+
+    /**
+     * Establece el saldo de la tarjeta
+     * @param saldo de la tarjeta
+     */
+    public void setNumero(Double saldo) {
+        this.saldo = saldo;
+    }
+
+    /**
      * Devuelve la fecha emisi&oacute;n
      * @return la fecha emisi&oacute;n
      */

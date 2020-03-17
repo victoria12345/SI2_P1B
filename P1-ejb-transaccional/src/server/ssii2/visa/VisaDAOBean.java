@@ -259,9 +259,6 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
             pstmt_saldo.setDouble(1, saldo);
             pstmt_saldo.setString(2, pago.getTarjeta().getNumero());
 
-            // OJO QUE CON ESTO PUEDE HABER PROBLEMAS PORQUE FALLE Y RET VALGA -1
-            // PERO TODO LO DEMÁS SIGA PALANTE COMO SI FUESE TODO BIEN.
-
             if (!pstmt_saldo.execute()
                     && pstmt_saldo.getUpdateCount() == 1) {
               ret = 1;

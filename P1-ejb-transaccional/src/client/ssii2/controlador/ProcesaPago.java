@@ -161,8 +161,7 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
 		if (pago == null) {
 			pago = creaPago(request);
 			boolean isdebug = Boolean.valueOf(request.getParameter("debug"));
-      // OJOOOOOOOOOOOOOO VOLVER A PONER ESTO CON ISDEBUG EN VEZ DE TRUE
-      dao.setDebug(true);
+      dao.setDebug(isdebug);
 			boolean isdirectConnection = Boolean.valueOf(request.getParameter("directConnection"));
 			dao.setDirectConnection(isdirectConnection);
 			boolean usePrepared = Boolean.valueOf(request.getParameter("usePrepared"));
