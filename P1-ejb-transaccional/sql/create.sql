@@ -10,6 +10,8 @@ saldo              double precision not null,
 PRIMARY KEY (numeroTarjeta)
 );
 
+alter table tarjeta alter column saldo set default 1000.0;
+
 INSERT INTO tarjeta(numeroTarjeta,titular,validaDesde,validaHasta,codigoVerificacion,saldo)
 VALUES ('1111 2222 3333 4444','Jose Garcia','11/09','11/20','123',1000.0);
 
@@ -31,4 +33,3 @@ PRIMARY KEY (idAutorizacion)
 
 -- INSERT INTO pago(idAutorizacion,idTransaccion, codRespuesta, importe, idComercio, numeroTarjeta)
 -- VALUES (NEXTVAL(pago_idAutorizacion_seq), 1,'000', 123.00, '0000000000000000', '1111 2222 3333 4444');
-

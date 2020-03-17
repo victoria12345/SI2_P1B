@@ -154,11 +154,6 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
         }
 
 
-    // String ruta = getServletContext().getInitParameter("rutaws");
-    //
-    // BindingProvider bp = (BindingProvider) dao;
-    // bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, ruta);
-
 		HttpSession sesion = request.getSession(false);
 		if (sesion != null) {
 			pago = (PagoBean) sesion.getAttribute(ComienzaPago.ATTR_PAGO);
@@ -166,7 +161,8 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
 		if (pago == null) {
 			pago = creaPago(request);
 			boolean isdebug = Boolean.valueOf(request.getParameter("debug"));
-			dao.setDebug(isdebug);
+      // OJOOOOOOOOOOOOOO VOLVER A PONER ESTO CON ISDEBUG EN VEZ DE TRUE
+      dao.setDebug(true);
 			boolean isdirectConnection = Boolean.valueOf(request.getParameter("directConnection"));
 			dao.setDirectConnection(isdirectConnection);
 			boolean usePrepared = Boolean.valueOf(request.getParameter("usePrepared"));
@@ -180,7 +176,16 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
             enviaError(new Exception("Tarjeta no autorizada:"), request, response);
             return;
         }
-  pagoModificado = dao.realizaPago(pago);
+  try {
+    pagoModificado = dao.realizaPago(pago);
+
+  } catch (Exception e) {
+    errorLog(e.toString());
+    sesion.invalidate();
+    enviaError(new Exception("Pago incorrecto. EJBException lanzada y capturada."), request, response);
+  }
+
+
 	if (pagoModificado == null) {
             enviaError(new Exception("Pago incorrecto"), request, response);
             return;
@@ -214,6 +219,7 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
     * @return bean que contiene el pago a realizar
     * @see ssii2.visa.PagoBean
     */
+
     private PagoBean creaPago(HttpServletRequest request) {
         PagoBean pago = new PagoBean();
         pago.setIdTransaccion(request.getParameter(PARAM_ID_TRANSACCION));

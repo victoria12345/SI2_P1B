@@ -77,10 +77,10 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
                     " and idComercio = ?";
 
     private static final String SELECT_SALDO_QRY =
-                    "select saldo from tarjeta where numeroTarjeta=?"
+                    "select saldo from tarjeta where numeroTarjeta=?";
 
     private static final String INSERT_SALDO_QRY =
-                    "update tarjeta set saldo=? where numeroTarjeta=?"
+                    "update tarjeta set saldo=? where numeroTarjeta=?";
     /**************************************************/
 
 
@@ -214,6 +214,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
+        ResultSet rs_saldo = null;
         int ret = 1; //En principio ret vale 1, y si, al final del todo, sigue valiendo
                          //1 pues se devolverá el pago, y si vale 0, pues se devolvera null.
         String codRespuesta = "999"; // En principio, denegado
@@ -239,8 +240,35 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
             errorLog(select_saldo);
             pstmt_saldo = con.prepareStatement(select_saldo);
             pstmt_saldo.setString(1, pago.getTarjeta().getNumero());
-            rs2 = pstmt_saldo.executeQuery();
-            ME QUEDA DECLARAR RS2 Y VER EL SALDO DE ESA TARJETA.
+            rs_saldo = pstmt_saldo.executeQuery();
+            if (! rs_saldo.next()){
+
+              throw new EJBException("No se pudo obtener el saldo de la tarjeta.");
+
+            }
+            double saldo = rs_saldo.getDouble("saldo");
+
+            if  (saldo < pago.getImporte()){
+              pago.setIdAutorizacion(null);
+              return null;
+            }
+
+            saldo = saldo - pago.getImporte();
+            String insert_saldo = INSERT_SALDO_QRY;
+            pstmt_saldo = con.prepareStatement(insert_saldo);
+            pstmt_saldo.setDouble(1, saldo);
+            pstmt_saldo.setString(2, pago.getTarjeta().getNumero());
+
+            // OJO QUE CON ESTO PUEDE HABER PROBLEMAS PORQUE FALLE Y RET VALGA -1
+            // PERO TODO LO DEMÁS SIGA PALANTE COMO SI FUESE TODO BIEN.
+
+            if (!pstmt_saldo.execute()
+                    && pstmt_saldo.getUpdateCount() == 1) {
+              ret = 1;
+            } else {
+              throw new EJBException("No se pudo actualizar el saldo de la tarjeta.");
+            }
+
 
 
             // Insertar en la base de datos el pago
