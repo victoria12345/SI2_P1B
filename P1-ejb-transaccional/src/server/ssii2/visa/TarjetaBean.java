@@ -51,7 +51,7 @@ public class TarjetaBean {
      * Devuelve el saldo de la tarjeta
      * @return el saldo de la tarjeta
      */
-    public String getSaldo() {
+    public Double getSaldo() {
         return saldo;
     }
 
@@ -59,7 +59,7 @@ public class TarjetaBean {
      * Establece el saldo de la tarjeta
      * @param saldo de la tarjeta
      */
-    public void setNumero(Double saldo) {
+    public void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
 
