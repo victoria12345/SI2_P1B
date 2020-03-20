@@ -32,7 +32,7 @@ public class VisaCancelacionJMSBean extends DBTester implements MessageListener 
   private static final String UPDATE_CANCELA_QRY = "update pago set codRespuesta=999 where pago.idAutorizacion=?";
   private static final String UPDATE_RECTIFICA_QRY = "update tarjeta set saldo=? where tarjeta.numeroTarjeta=?";
   private static final String SELECT_TARJETA_QRY  = "select numeroTarjeta, importe from Pago where pago.idAutorizacion=?";
-  private static final String SELECT_SALDO_QRY = "select slado from tarjeta where numeroTarjeta=?";
+  private static final String SELECT_SALDO_QRY = "select saldo from tarjeta where numeroTarjeta=?";
 
 
   public VisaCancelacionJMSBean() {
@@ -101,7 +101,7 @@ public class VisaCancelacionJMSBean extends DBTester implements MessageListener 
               qry = UPDATE_RECTIFICA_QRY;
               pstmt = pcon.prepareStatement(qry);
               pstmt.setDouble(1, saldo);
-              pstmt.setDouble(2, importe);
+              pstmt.setString(2, tarjeta);
               pstmt.executeUpdate();
 
           } else {

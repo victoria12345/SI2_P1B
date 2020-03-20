@@ -80,6 +80,7 @@ public class VisaQueueMessageProducer {
           if (args[0].equals("-browse")) {
             browseMessages(session);
           } else {
+
             // Enviar argv[0] como mensaje de texto
             messageProducer = session.createProducer(queue);
             message = session.createTextMessage();
